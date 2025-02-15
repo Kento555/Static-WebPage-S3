@@ -9,27 +9,6 @@ resource "aws_acm_certificate" "cert" {
   lifecycle {create_before_destroy = true}
 }
 
-# Validate the Certificate Using Route 53
-# This automates DNS validation using Route 53.
-# resource "aws_route53_record" "cert_validation" {
-#   for_each = {
-#     for dvo in aws_acm_certificate.cert.domain_validation_options : dvo.domain_name => {
-#       name   = dvo.resource_record_name
-#       record = dvo.resource_record_value
-#       type   = dvo.resource_record_type
-#     }
-#   }
-
-#   zone_id = data.aws_route53_zone.sctp_zone.zone_id 
-#   name    = each.value.name
-#   type    = each.value.type
-#   records = [each.value.record]
-#   ttl     = 60
-
-#   lifecycle {
-#     ignore_changes = [records, name, type]  # Ignore changes to these attribute
-#   }
-# }
 
 # Create Load Balancer
 resource "aws_lb" "my_alb" {
